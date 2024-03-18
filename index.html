@@ -1,0 +1,117 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: cornflowerblue;
+    background-image: url("https://media.istockphoto.com/id/1281116080/photo/pumpkin-hummus-and-ingredients.jpg?s=612x612&w=0&k=20&c=P9K5y-t9pcsSCprNgfibQ51BVkaoHSs73PULdVTvnxQ=");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .container {
+    position: relative;
+    max-width: 100%;
+    height: 100%;
+  }
+
+  .background-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  .form-wrapper {
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn {
+    font-size: 24px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+</style>
+<body>
+  <div class="container">
+    <img class="background-img" src="https://media.istockphoto.com/id/1281116080/photo/pumpkin-hummus-and-ingredients.jpg?s=612x612&w=0&k=20&c=P9K5y-t9pcsSCprNgfibQ51BVkaoHSs73PULdVTvnxQ=" alt="Background Image">
+    <div class="form-wrapper">
+      <form id="recipeForm">
+        <div class="form-group" style="margin-right: 20px;">
+          <br>
+          <label for="recipeName">Recipe Name:</label>
+          
+          <input type="text" id="recipeName" placeholder="Recipe Name">
+        </div>
+        <div class="form-group">
+          <input class="btn" type="submit" value="Submit" style="margin-left: 135px;">
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <script>
+    document.getElementById("recipeForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const recipeName = document.getElementById("recipeName").value;
+
+    
+      const url = `https://food-recipes-with-images.p.rapidapi.com/?q=${recipeName}`;
+      const options = {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Key": "d9c44a8e0dmshc064b0123996ca0p1a3039jsn0431da096853",
+          "X-RapidAPI-Host": "food-recipes-with-images.p.rapidapi.com",
+        },
+      };
+
+      fetch(url, options)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          localStorage.setItem("data", JSON.stringify(data));
+          window.location.href = "./index1.html";
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+  </script>
+</body>
+</html> 
+
